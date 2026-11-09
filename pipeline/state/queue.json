@@ -1,0 +1,21 @@
+{
+  "jobs": [
+    {
+      "attempts": 0,
+      "created_at": 1794233440.6252933,
+      "id": "a88bc598-bc27-4f41-bc59-273ea64d72ba",
+      "key": "silk-road-source-verification",
+      "lease": null,
+      "payload": {
+        "case": "Silk Road",
+        "task": "Verify the documented case and primary sources for a proposed story"
+      },
+      "payload_sha256": "5f9fccae4f9770f5962a596f4abe088e19cf5f34f77abe4e72b6253fce4dc229",
+      "receipts": [],
+      "status": "queued"
+    }
+  ],
+  "paused": true,
+  "stopped": false,
+  "version": 1
+}

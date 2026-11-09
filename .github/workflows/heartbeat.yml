@@ -1,0 +1,40 @@
+name: Queue heartbeat
+on:
+  schedule:
+    - cron: '*/30 * * * *'
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['pipeline/**', '.github/workflows/heartbeat.yml']
+permissions:
+  contents: write
+concurrency:
+  group: queue-heartbeat
+  cancel-in-progress: false
+jobs:
+  health:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+          fetch-depth: 0
+      - name: Recover expired leases and summarize
+        run: |
+          python3 pipeline/queue.py heartbeat --public-status docs/data/runtime.json | tee heartbeat.json
+          { echo '### Queue heartbeat'; echo '```json'; cat heartbeat.json; echo '```'; echo 'This heartbeat does not generate content or dispatch production jobs.'; } >> "$GITHUB_STEP_SUMMARY"
+      - name: Save recovery state
+        run: |
+          if ! git diff --quiet -- pipeline/state/queue.json docs/data/runtime.json; then
+            git config user.name 'github-actions[bot]'
+            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git add pipeline/state/queue.json docs/data/runtime.json
+            git commit -m 'Update queue heartbeat state'
+            git pull --rebase origin "${{ github.event.repository.default_branch }}"
+            git push origin "HEAD:${{ github.event.repository.default_branch }}"
+          fi
+      - uses: actions/upload-artifact@v4
+        with:
+          name: heartbeat-${{ github.run_id }}
+          path: heartbeat.json
+          retention-days: 7

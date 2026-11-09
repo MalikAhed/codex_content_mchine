@@ -1,0 +1,26 @@
+# Private production input never belongs in this public repository.
+private-voice/
+production-private/
+**/reference.wav
+**/owner-voice-test.wav
+**/*.wav
+**/*.pt
+**/*.pth
+**/*.safetensors
+**/.cache/
+**/.venv/
+**/__pycache__/
+.env
+.env.*
+!.env.example
+node_modules/
+test-results/
+playwright-report/
+*.mp4
+# Original bundled example embeds the private audition.
+source/
+Crime-Story-Skill/
+
+# Local queue lock/temp state
+pipeline/state/.queue.lock
+pipeline/state/.queue-*

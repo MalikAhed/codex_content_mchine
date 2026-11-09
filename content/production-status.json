@@ -1,0 +1,22 @@
+{
+  "updated_utc_date": "2026-11-09",
+  "case": "silk-road",
+  "status": "blocked",
+  "research": {
+    "status": "blocked",
+    "verified_script": false,
+    "reason": "Proxy CONNECT 403 blocked the attempted primary and independent source hosts; HTTP 000 means no destination response was received.",
+    "details": "silk-road/README.md"
+  },
+  "narration": {
+    "status": "blocked",
+    "new_audio_generated": false,
+    "reason": "Official pinned model host returned proxy CONNECT 403; the model weights and torch were unavailable on the inspected machine.",
+    "required_private_inputs": "Mount the owner-authorized private source kit and owner reference outside the public repository; obtain and hash-verify official pinned model files locally.",
+    "release_gate": "Technical validation, listening review, and owner approval of the revision are required."
+  },
+  "deliverables": {
+    "landscape_episode": "planned, 5–8 minutes measured from narration",
+    "portrait_shorts": "three planned, each under 60 seconds measured from narration; third resolves the documented case"
+  }
+}

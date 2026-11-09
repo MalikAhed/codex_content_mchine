@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#171816">
+  <title>Casework — Story Studio</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="#top" aria-label="Casework Story Studio home"><span class="brand-mark">C<span>.</span></span><span>CASEWORK<small>STORY STUDIO</small></span></a>
+      <div class="side-label">WORKSPACE</div>
+      <nav aria-label="Main navigation">
+        <a class="nav-item active" href="#queue"><span aria-hidden="true">▦</span> Production desk <b id="nav-count">0</b></a>
+        <a class="nav-item" href="#review"><span aria-hidden="true">◇</span> Owner review</a>
+      </nav>
+      <div class="sidebar-bottom"><span class="live-dot"></span><div>Owner review desk<small>For the stories in progress.</small></div></div>
+    </aside>
+
+    <main id="top">
+      <header class="topbar"><div><span class="eyebrow">THE PRODUCTION DESK</span><span class="top-divider">/</span><span class="top-muted">Overview</span></div><div class="top-right"><span class="local-indicator"><i></i> PUBLIC STUDIO</span><span class="avatar" aria-hidden="true">O</span></div></header>
+      <div class="content">
+        <section class="intro"><div><div class="eyebrow amber">YOUR STORY STUDIO <span class="eyebrow-line"></span> <span id="today">PRODUCTION OVERVIEW</span></div><h1>Stories worth<br><em>telling right.</em></h1><p>A clear view of every case, from first lead to final review.</p></div><div class="intro-aside"><span class="asterisk">✳</span><span>RESEARCHED WITH CARE.<br>MADE TO BE REMEMBERED.</span></div></section>
+        <section class="stats" aria-label="Production overview"><div class="stat"><span>IN THE QUEUE</span><strong id="stat-total">—</strong><small>Stories being tracked</small></div><div class="stat"><span>IN PRODUCTION</span><strong id="stat-production">—</strong><small>Stories taking shape</small></div><div class="stat"><span>AWAITING REVIEW</span><strong id="stat-review">—</strong><small>Ready for your eyes</small></div><div class="stat stat-note"><span class="note-icon">✳</span><div><strong>Good stories take time.</strong><small>Every case is researched, crafted and reviewed with care.</small></div></div></section>
+        <section class="runtime-panel" aria-labelledby="runtime-title"><div><div class="eyebrow amber">PRODUCTION MONITOR</div><h2 id="runtime-title">Studio activity<span class="heading-dot">.</span></h2><p id="runtime-summary">Checking the latest producer status…</p></div><div class="runtime-details"><div><span>MONITOR</span><strong id="monitor-status">UNKNOWN</strong></div><div><span>PRODUCER</span><strong id="runtime-status">UNKNOWN</strong></div><div><span>LAST CHECK</span><strong id="runtime-check">UNKNOWN</strong></div><p id="runtime-reason">The monitor reflects the last published report.</p><p>Queue controls run through the repository CLI. Review decisions on this page stay in your browser.</p><div id="runtime-links"></div></div></section>
+        <section class="queue-section" id="queue"><div class="section-head"><div><div class="eyebrow amber">THE WORK IN PROGRESS</div><h2>Production queue<span class="heading-dot">.</span></h2><p>Follow each story through the studio.</p></div><span class="updated" id="updated">CATALOG STATUS UNKNOWN</span></div>
+          <div class="filters" role="group" aria-label="Filter stories by status"><button class="filter active" data-filter="all" aria-pressed="true">All stories <span id="filter-count">0</span></button><button class="filter" data-filter="production" aria-pressed="false">In progress</button><button class="filter" data-filter="review" aria-pressed="false">Needs review</button><button class="filter" data-filter="approved" aria-pressed="false">Approved</button></div>
+          <div id="queue-content" class="queue-content" aria-live="polite"><div class="message">Loading the production queue…</div></div>
+        </section>
+        <section class="review-section" id="review"><div class="review-intro"><div class="eyebrow amber">A NOTE FROM THE STUDIO</div><h2>Made for a<br><em>closer look.</em></h2><p>Your review is the last word. Open an available story to watch it, then record your decision when you are ready.</p><div class="review-rule"></div><small>01 &nbsp; RESEARCH &nbsp; / &nbsp; 02 &nbsp; CRAFT &nbsp; / &nbsp; 03 &nbsp; REVIEW</small></div><div class="review-card"><div class="review-card-top"><span class="file-icon">✳</span><span>OWNER REVIEW</span></div><h3>Thoughtful work,<br>thoughtful feedback.</h3><p>Approve a complete story or request changes. Decisions are saved in this browser and can be downloaded to share with the production team.</p><a href="#queue">VIEW THE QUEUE <span>↗</span></a></div></section>
+        <footer><div><span class="footer-brand">C<span>.</span></span> CASEWORK <span> / &nbsp; STORY STUDIO</span></div><div>CRAFTED WITH CARE &nbsp; ✳ &nbsp; PUBLIC STUDIO</div></footer>
+      </div>
+    </main>
+  </div>
+  <dialog id="detail-dialog" aria-labelledby="detail-title"><div class="dialog-inner"><button class="close" id="close-dialog" aria-label="Close story details">×</button><div id="detail-content"></div></div></dialog>
+  <script src="app.js"></script>
+</body>
+</html>
