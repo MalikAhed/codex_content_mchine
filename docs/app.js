@@ -9,7 +9,7 @@
   const statusOf = item => labels[item.status] ? item.status : 'production';
   const isComplete = media => media && media.type === 'html' && media.kind === 'complete' && media.available;
   const requiredChecks = ['factsVerified', 'visualsReviewed', 'narrationValidated', 'listeningReviewed', 'durationsValidated', 'independentQaPassed'];
-  const canApprove = item => statusOf(item) === 'review' && (item.media || []).some(isComplete) && requiredChecks.every(check => item.checks?.[check] === true);
+  const canApprove = item => typeof item.revision === 'string' && item.revision.trim().length > 0 && statusOf(item) === 'review' && (item.media || []).some(isComplete) && item.receiptVerified === true && requiredChecks.every(check => item.checks?.[check] === true);
   const displayStatus = item => statusOf(item) === 'review' && !canApprove(item) ? 'In production' : labels[statusOf(item)];
   const selected = item => filter === 'all' || (filter === 'production' && (['research','scripting','production','changes'].includes(statusOf(item)) || (statusOf(item) === 'review' && !canApprove(item)))) || (filter === 'review' && canApprove(item)) || (filter === 'approved' && statusOf(item) === 'approved');
   function render() {
@@ -24,23 +24,25 @@
   function safeMedia(item) { return (Array.isArray(item.media) ? item.media : []).filter(media => media.available && media.type === 'html'); }
   function openCase(id) {
     const item = cases.find(entry => entry.id === id); if (!item) return;
-    const media = safeMedia(item), decision = decisions[id];
-    $('#detail-content').innerHTML = `<div class="eyebrow amber">CASE FILE &nbsp; / &nbsp; ${escapeHTML(item.category || 'STORY IN PROGRESS')}</div><h2 id="detail-title">${escapeHTML(item.title)}</h2><span class="status ${escapeHTML(statusOf(item))}">${escapeHTML(displayStatus(item))}</span><p class="detail-copy">${escapeHTML(item.summary || 'This story is in progress.')}</p>${item.notes ? `<p class="notice">${escapeHTML(item.notes)}</p>` : ''}<div class="detail-block"><h3>Watch the story</h3><p class="notice">${media.length ? 'Open the available HTML presentation in a new tab.' : 'No playable HTML is available yet. This case is still in progress.'}</p>${media.map(m => `<a class="secondary media-link" href="${escapeHTML(m.url)}" target="_blank" rel="noopener">Watch ${escapeHTML(m.title || 'story')} ${m.kind === 'complete' ? '' : m.kind === 'style-study' ? '— silent style study' : '— excerpt'} ↗</a><p class="notice">${m.kind === 'complete' ? 'Complete presentation' : m.kind === 'style-study' ? 'Silent style study / work in progress' : 'Excerpt / work in progress'}${m.duration ? ` · ${escapeHTML(m.duration)}` : ''}</p>`).join('')}</div><div class="detail-block"><h3>Owner review</h3><p class="notice">Decisions are saved only in this browser, not to the production catalog or other devices. Download the decision JSON to share it with the team.</p>${!canApprove(item) ? '<p class="notice">Approval becomes available when a complete presentation is awaiting review and all production checks have passed. Partial studies are not eligible.</p>' : ''}<label for="feedback">Review notes</label><textarea id="feedback" placeholder="Share what is working or what needs attention…">${escapeHTML(decision?.notes || '')}</textarea><div><button class="primary" id="approve" ${canApprove(item) ? '' : 'disabled'}>Approve story</button><button class="secondary" id="request">Request changes</button><button class="secondary" id="download" ${decision ? '' : 'disabled'}>Download decision ↓</button></div><p class="decision-message" id="decision-message">${decision ? `Local decision: ${escapeHTML(decision.decision === 'approved' ? 'Approved' : 'Changes requested')} · ${escapeHTML(new Date(decision.at).toLocaleString())}` : ''}</p></div>`;
+    const media = safeMedia(item), previousDecision = decisions[id], decision = previousDecision && item.revision && previousDecision.revision === item.revision ? previousDecision : null;
+    $('#detail-content').innerHTML = `<div class="eyebrow amber">CASE FILE &nbsp; / &nbsp; ${escapeHTML(item.category || 'STORY IN PROGRESS')}</div><h2 id="detail-title">${escapeHTML(item.title)}</h2><span class="status ${escapeHTML(statusOf(item))}">${escapeHTML(displayStatus(item))}</span><p class="detail-copy">${escapeHTML(item.summary || 'This story is in progress.')}</p><p class="notice">Revision: ${escapeHTML(item.revision || 'Not specified')}</p>${item.notes ? `<p class="notice">${escapeHTML(item.notes)}</p>` : ''}<div class="detail-block"><h3>Watch the story</h3><p class="notice">${media.length ? 'Open the available HTML presentation in a new tab.' : 'No playable HTML is available yet. This case is still in progress.'}</p>${media.map(m => `<a class="secondary media-link" href="${escapeHTML(m.url)}" target="_blank" rel="noopener">Watch ${escapeHTML(m.title || 'story')} ${m.kind === 'complete' ? '' : m.kind === 'style-study' ? '— silent style study' : '— excerpt'} ↗</a><p class="notice">${m.kind === 'complete' ? 'Complete presentation' : m.kind === 'style-study' ? 'Silent style study / work in progress' : 'Excerpt / work in progress'}${m.duration ? ` · ${escapeHTML(m.duration)}` : ''}</p>`).join('')}</div><div class="detail-block"><h3>Owner review</h3><p class="notice">Decisions are saved only in this browser, not to the production catalog or other devices. Download the decision JSON to share it with the team.</p>${previousDecision && !decision ? `<p class="notice">Previous decision (stale): ${escapeHTML(previousDecision.decision === 'approved' ? 'Approved' : 'Changes requested')} · revision ${escapeHTML(previousDecision.revision || 'unspecified')}. It does not apply to this revision.</p>` : ''}${!canApprove(item) ? '<p class="notice">Approval becomes available when a complete presentation is awaiting review and all production checks have passed and a matching release receipt has been verified. Partial studies are not eligible.</p>' : ''}<label for="feedback">Review notes</label><textarea id="feedback" placeholder="Share what is working or what needs attention…">${escapeHTML(decision?.notes || '')}</textarea><div><button class="primary" id="approve" ${canApprove(item) ? '' : 'disabled'}>Approve story</button><button class="secondary" id="request" ${item.revision ? '' : 'disabled'}>Request changes</button><button class="secondary" id="download" ${decision ? '' : 'disabled'}>Download decision ↓</button></div><p class="decision-message" id="decision-message">${decision ? `Local decision: ${escapeHTML(decision.decision === 'approved' ? 'Approved' : 'Changes requested')} · ${escapeHTML(new Date(decision.at).toLocaleString())}` : ''}</p></div>`;
     $('#approve').addEventListener('click', () => saveDecision(item, 'approved'));
     $('#request').addEventListener('click', () => saveDecision(item, 'changes_requested'));
-    $('#download').addEventListener('click', () => downloadDecision(item.id));
+    $('#download').addEventListener('click', () => downloadDecision(item));
     $('#detail-dialog').showModal();
   }
   function saveDecision(item, decision) {
     const notes = $('#feedback').value.trim();
+    if (typeof item.revision !== 'string' || !item.revision.trim()) return;
     if (decision === 'changes_requested' && !notes) { $('#decision-message').textContent = 'Please add a note describing the changes requested.'; $('#feedback').focus(); return; }
     if (decision === 'approved' && !canApprove(item)) return;
-    const record = {caseId:item.id, caseTitle:item.title, decision, notes, at:new Date().toISOString(), scope:'browser-local'};
+    const record = {caseId:item.id, caseTitle:item.title, revision:item.revision || null, decision, notes, at:new Date().toISOString(), scope:'browser-local'};
     try { decisions[item.id] = record; localStorage.setItem(key, JSON.stringify(decisions)); $('#decision-message').textContent = `Saved in this browser: ${decision === 'approved' ? 'Approved' : 'Changes requested'}. Download the decision to share it.`; $('#download').disabled = false; }
     catch { delete decisions[item.id]; $('#decision-message').textContent = 'This browser could not save the decision. Check storage settings and try again.'; }
   }
-  function downloadDecision(id) {
-    if (!decisions[id]) return;
+  function downloadDecision(item) {
+    const id = item.id;
+    if (!item.revision || !decisions[id] || decisions[id].revision !== item.revision) return;
     const blob = new Blob([JSON.stringify(decisions[id], null, 2) + '\n'], {type:'application/json'}), url = URL.createObjectURL(blob), link = document.createElement('a');
     link.href = url; link.download = `casework-${id.replace(/[^a-z0-9_-]/gi, '-')}-decision.json`; link.click(); setTimeout(() => URL.revokeObjectURL(url), 1000);
   }
@@ -48,6 +50,24 @@
   async function checkMedia(media) {
     if (!media || media.type !== 'html' || typeof media.url !== 'string' || !validURL(media.url)) return false;
     try { const response = await fetch(media.url, {method:'GET'}); return response.ok && (response.headers.get('content-type') || '').includes('text/html'); } catch { return false; }
+  }
+  async function verifyReceipt(item) {
+    try {
+      const local = path => { const url = new URL(path, location.href); if (url.origin !== location.origin || !['http:', 'https:'].includes(url.protocol)) throw new Error('Nonlocal evidence'); return url; };
+      const digest = async (path, expected) => {
+        if (typeof path !== 'string' || !/^[a-f0-9]{64}$/i.test(expected || '') || !crypto.subtle) return false;
+        const response = await fetch(local(path), {cache:'no-store'}); if (!response.ok) return false;
+        const hash = await crypto.subtle.digest('SHA-256', await response.arrayBuffer());
+        return Array.from(new Uint8Array(hash), byte => byte.toString(16).padStart(2, '0')).join('') === expected.toLowerCase();
+      };
+      if (typeof item.releaseReceipt !== 'string' || typeof item.releaseManifest !== 'string' || !item.revision) return false;
+      const response = await fetch(local(item.releaseReceipt), {cache:'no-store'}); if (!response.ok) return false;
+      const receipt = await response.json();
+      if (receipt.status !== 'passed' || receipt.revision !== item.revision || typeof receipt.validatedAt !== 'string' || Number.isNaN(Date.parse(receipt.validatedAt)) || !receipt.artifact || !Array.isArray(receipt.reviewReceipts) || receipt.reviewReceipts.length < 3) return false;
+      if (!(item.media || []).some(media => isComplete(media) && local(media.url).href === local(receipt.artifact.path).href)) return false;
+      const checks = await Promise.all([digest(item.releaseManifest, receipt.manifestSha256), digest(receipt.artifact.path, receipt.artifact.sha256), ...receipt.reviewReceipts.map(evidence => digest(evidence.path, evidence.sha256))]);
+      return checks.every(Boolean);
+    } catch { return false; }
   }
   document.querySelectorAll('.filter').forEach(button => button.addEventListener('click', () => { filter = button.dataset.filter; document.querySelectorAll('.filter').forEach(other => { const active = other === button; other.classList.toggle('active', active); other.setAttribute('aria-pressed', String(active)); }); render(); }));
   $('#queue-content').addEventListener('click', event => { const button = event.target.closest('[data-open]'); if (button) openCase(button.dataset.open); });
@@ -59,6 +79,7 @@
       const catalog = await response.json(); if (!Array.isArray(catalog.cases)) throw new Error('Invalid catalog');
       cases = catalog.cases.filter(item => item && typeof item.id === 'string' && typeof item.title === 'string').map(item => ({...item, media:Array.isArray(item.media) ? item.media : []}));
       await Promise.all(cases.flatMap(item => item.media.map(async media => { media.available = await checkMedia(media); })));
+      await Promise.all(cases.map(async item => { item.receiptVerified = await verifyReceipt(item); }));
       $('#updated').textContent = catalog.updatedAt && !Number.isNaN(Date.parse(catalog.updatedAt)) ? `UPDATED ${new Date(catalog.updatedAt).toLocaleDateString(undefined, {month:'short', day:'numeric', year:'numeric'}).toUpperCase()}` : 'CATALOG CONNECTED';
       render();
     } catch { $('#queue-content').innerHTML = '<div class="message">The production catalog could not be loaded. Please check the connection and refresh this page.</div>'; $('#updated').textContent = 'CATALOG UNAVAILABLE'; }

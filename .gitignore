@@ -24,3 +24,6 @@ Crime-Story-Skill/
 # Local queue lock/temp state
 pipeline/state/.queue.lock
 pipeline/state/.queue-*
+
+# On-demand portable exports duplicate published assets.
+exports/

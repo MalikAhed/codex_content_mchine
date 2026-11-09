@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "duration": 18,
+  "audio": null,
+  "scenes": [
+    {"start": 0, "end": 6, "image": "../assets/generated/silk-road-library.webp", "alt": "A cinematic reconstructed library scene."},
+    {"start": 6, "end": 12, "image": "../assets/generated/narrator-plate.webp", "alt": "A stylized narrator at a desk.", "subject": "../assets/generated/narrator-subject.webp"},
+    {"start": 12, "end": 18, "image": "../assets/generated/silk-road-release-landscape.webp", "alt": "A conceptual reconstructed closing hall."}
+  ],
+  "captions": []
+}

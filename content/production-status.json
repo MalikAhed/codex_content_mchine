@@ -11,12 +11,23 @@
   "narration": {
     "status": "blocked",
     "new_audio_generated": false,
-    "reason": "Official pinned model host returned proxy CONNECT 403; the model weights and torch were unavailable on the inspected machine.",
+    "reason": "Official pinned model host returned proxy CONNECT 403; weights remain unavailable. CPU dependency prerequisites now import successfully; no inference has been tested.",
     "required_private_inputs": "Mount the owner-authorized private source kit and owner reference outside the public repository; obtain and hash-verify official pinned model files locally.",
-    "release_gate": "Technical validation, listening review, and owner approval of the revision are required."
+    "release_gate": "Technical validation, listening review, and owner approval of the revision are required.",
+    "prerequisites": {
+      "python": "3.12",
+      "torch": "2.6.0+cpu",
+      "torchaudio": "2.6.0+cpu",
+      "chatterbox": "0.1.7",
+      "perth": "1.1.0",
+      "offline_imports": "passed",
+      "pip_check": "passed",
+      "model_loaded": false,
+      "inference_tested": false
+    }
   },
   "deliverables": {
-    "landscape_episode": "planned, 5–8 minutes measured from narration",
+    "landscape_episode": "planned, 5\u20138 minutes measured from narration",
     "portrait_shorts": "three planned, each under 60 seconds measured from narration; third resolves the documented case"
   }
 }

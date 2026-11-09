@@ -3,11 +3,11 @@
   "cases": [
     {
       "id": "silk-road",
-      "title": "Silk Road · visual direction",
+      "title": "Silk Road \u00b7 visual direction",
       "category": "Visual development",
       "summary": "A silent three-scene exploration of the studio's visual direction.",
       "status": "research",
-      "format": "Silent style study · 0:18",
+      "format": "Silent style study \u00b7 0:18",
       "notes": "Research verification and narration are blocked. This visual study does not present a verified account or a complete story.",
       "checks": {
         "factsVerified": false,
@@ -18,8 +18,15 @@
         "independentQaPassed": false
       },
       "media": [
-        {"title": "visual direction", "type": "html", "url": "study/index.html", "kind": "style-study", "duration": "0:18"}
-      ]
+        {
+          "title": "visual direction",
+          "type": "html",
+          "url": "study/index.html",
+          "kind": "style-study",
+          "duration": "0:18"
+        }
+      ],
+      "revision": "style-study-v1"
     }
   ]
 }
