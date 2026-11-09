@@ -8,6 +8,10 @@ A compact public review desk for carefully researched cinematic crime stories. T
 - The 30-minute GitHub Actions heartbeat checks queue health and recovers expired leases. It does not generate content or restart chat agents. The producer is **not configured**, and the production queue starts paused.
 - [Operations and runner requirements](pipeline/README.md), [production blockers](content/production-status.json), [candidate research handoff](content/silk-road/README.md), [fresh-agent instructions](AGENTS.md), [current handoff](agent/STATE.md).
 
+## Chosen operating mode
+
+The owner chose **this workspace for now**. Unattended production stays visibly blocked; no external always-on host is being requested. Continue bounded work here when research and official model access are available, saving checkpoints to this repository and private production disk. The heartbeat remains a queue monitor.
+
 ## What remains blocked
 
 This workspace's proxy denied access to attempted primary/independent research and the pinned official voice model. No new owner narration or verified Silk Road script has been created. The public repository intentionally contains no voice reference, audition, raw WAV, embedded source example, model weights or credentials. A future producer needs an owner-authorized private mounted kit and model cache; this repository alone cannot reconstruct the owner's voice.

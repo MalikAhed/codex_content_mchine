@@ -3,6 +3,9 @@
 ## Goal
 Build the owner’s public compact crime-story review desk, durable bounded production queue, genuine scheduled health checks, and the first verified production possible with available resources.
 
+## Owner operating-mode choice
+The owner chose **this workspace for now; leave unattended production visibly blocked**. Do not reopen the external always-on host question. No producer backend will be configured in this session. Continue only bounded authorized workspace work once source/model access is restored; preserve the paused queue and honest blocked UI.
+
 ## Current work
 - CEO: repository instructions/handoff, integration, git publication and Pages investigation.
 - Site worker: responsive static review desk under `docs/`.
@@ -12,7 +15,7 @@ Build the owner’s public compact crime-story review desk, durable bounded prod
 
 ## Verified infrastructure
 - Git origin `https://github.com/MalikAhed/codex_content_mchine.git`, default branch `main`.
-- Git push to main succeeded. Public initial release: `67bc18f`; first remote heartbeat commit `e158064` was fast-forwarded locally.
+- Git push to main succeeded. Public initial release: `67bc18f`; first remote heartbeat commit `e158064` was fast-forwarded locally. Main code release `2309d034a9eb474149aa71e5a6c40d6c79be35b2` was pushed and verified against origin/main; followup records the owner operating-mode choice.
 - Local gh token invalid; GitHub REST host `api.github.com` explicitly CONNECT 403 denied. GitHub website accessible. Do not expose secret values.
 - Machine cgroup: 32 GiB RAM limit, 4 CPU quota, no GPU; initial free disk ~59.7 GiB. Private Python 3.12 CPU voice venv now has torch 2.6.0+cpu and torchaudio 2.6.0+cpu; Chatterbox 0.1.7 and Perth 1.1.0 offline imports/from_local callable pass, pip check clean. Private venv 1.9 GiB, final free disk ~57.5 GiB. No approved model weights are installed or inference tested. Transitive dependency resolution is recorded privately but not fully pinned.
 
@@ -31,4 +34,4 @@ The source kit and approved voice reference currently exist only on this private
 - Actual remote Queue heartbeat SUCCESS: https://github.com/MalikAhed/codex_content_mchine/actions/runs/42632497951 ; runtime snapshot lastCheck `2026-11-09T14:13:08.539181Z`, monitor ok, producer not configured, queue paused with one source-verification job.
 
 ## Next actions
-Revision-specific decisions and true-alpha narrator motion are implemented; independent browser tests pass revision invalidation, F/Home/End, audio clock/captions using private tone, missing audio/image and duration mismatch failure states. Structural release receipts bind current revision, manifest/artifact/review file hashes before approval. Portable HTML export built at `/workspace/exports/style-study.html` (about 1.25 MB), outside GitHub to avoid duplicate media; contains final silent timeline with no private test tone/captions. Independent offline browser review passed desktop/mobile play/pause/seek/alpha with zero HTTP(S) requests under network blocking. Browser policy prevented direct file:// navigation, so exact exported HTML was tested through setContent; direct file-open was not observed. Final staged scan cleared 23 followup files with no private audio/model payloads or symlinks. Followup publication is the remaining integration step. Owner enables Pages; network access remains required for research and official model. Future authenticated producer must satisfy private/shared queue requirements before resume.
+Revision-specific decisions and true-alpha narrator motion are implemented; independent browser tests pass revision invalidation, F/Home/End, audio clock/captions using private tone, missing audio/image and duration mismatch failure states. Structural release receipts bind current revision, manifest/artifact/review file hashes before approval. Portable HTML export built at `/workspace/exports/style-study.html` (about 1.25 MB), outside GitHub to avoid duplicate media; contains final silent timeline with no private test tone/captions. Independent offline browser review passed desktop/mobile play/pause/seek/alpha with zero HTTP(S) requests under network blocking. Browser policy prevented direct file:// navigation, so exact exported HTML was tested through setContent; direct file-open was not observed. Final staged scan cleared 23 followup files with no private audio/model payloads or symlinks. Both implementation releases are committed and published to main. Working tree was clean after the code release; this handoff update records the owner's chosen mode. Owner enables Pages; network access remains required for research and official model. Unattended production remains visibly blocked by the owner's choice. Do not resume the production queue until prerequisites and independent review gates are satisfied.
