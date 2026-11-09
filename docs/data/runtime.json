@@ -1,10 +1,13 @@
 {
-  "lastCheck": null,
-  "monitorStatus": "unknown",
-  "producerStatus": "not_configured",
-  "blockedReasons": ["Production backend is not configured", "Queue is paused"],
-  "queued": 1,
+  "blockedReasons": [
+    "Production backend is not configured",
+    "Queue is paused"
+  ],
+  "lastCheck": "2026-11-09T14:13:08.539181Z",
   "leased": 0,
+  "monitorStatus": "ok",
   "paused": true,
+  "producerStatus": "not_configured",
+  "queued": 1,
   "stopped": false
 }
